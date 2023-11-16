@@ -8,13 +8,14 @@
 stack_t *create_node(int n)
 {
 	stack_t *node = malloc(sizeof(stack_t));
+
 	if (!node)
 		handle_error(MEM_ALLOC_FAIL);
 
 	node->n = n;
 	node->prev = NULL;
 	node->next = NULL;
-	return node;
+	return (node);
 }
 
 /**
@@ -39,6 +40,7 @@ void print_stack(stack_t **stack, unsigned int line)
 {
 	(void)line;
 	stack_t *tmp = *stack;
+
 	while (tmp)
 	{
 		printf("%d\n", tmp->n);
@@ -59,8 +61,10 @@ void push_stack(stack_t **new_node, unsigned int line)
 	stack_t *tmp = head;
 	head = *new_node;
 	head->next = tmp;
+
 	if (tmp)
 		tmp->prev = head;
+
 	*new_node = NULL;
 }
 
@@ -75,6 +79,7 @@ void push_queue(stack_t **new_node, unsigned int line)
 		handle_error(MEM_ALLOC_FAIL);
 
 	stack_t *tmp = head;
+
 	if (!tmp)
 	{
 		head = *new_node;
