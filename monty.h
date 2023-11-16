@@ -1,8 +1,9 @@
-#ifndef MONTY_H_
-#define MONTY_H_
+#ifndef MONTY_H
+#define MONTY_H
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -48,43 +49,34 @@ typedef struct instruction_s
 #define PCHAR_RANGE_ERROR 11
 #define PCHAR_EMPTY_ERROR 12
 
- Function prototypes 
+/**
+ * Global variables
+ */
+extern stack_t *head;
+extern int line_number;
+extern char *opcode;
 
- File operations 
-void open_file(char file_name);
-void read_file(FILE fd);
-int len_chars(FILE fd);
-int interpret_line(char lineptr, int line_number, int format);
-void find_func(char opcode, char value, int ln, int format);
-
- Stack operations 
-stack_t create_node(int n);
+/**
+ * Function prototypes
+ */
+stack_t *create_node(int n);
 void free_nodes(void);
-void print_stack(stack_t stack, unsigned int line_number);
-void add_to_stack(stack_t stack, unsigned int line_number);
-void add_to_queue(stack_t stack, unsigned int line_number);
+void print_stack(stack_t **stack, unsigned int line);
+void push_stack(stack_t **new_node, unsigned int line);
+void push_queue(stack_t **new_node, unsigned int line);
 
- Error handling 
+void callopcode(op_func func, char *opcode, char *value, int line, int format);
+void print_top_value(stack_t **stack, unsigned int line);
+void pop_top_node(stack_t **stack, unsigned int line);
+void no_operation(stack_t **stack, unsigned int line);
+void swap_top_nodes(stack_t **stack, unsigned int line);
+
+void add_to_queue(stack_t **new_node, unsigned int line);
+
+void print_character(stack_t **stack, unsigned int line);
+void print_string(stack_t **stack, unsigned int line);
+void rotate_left(stack_t **stack, unsigned int line);
+
 void handle_error(int error_code);
 
- Other operations 
-void call_fun(op_func f, char op, char val, int ln, int format);
-void print_top(stack_t stack, unsigned int line_number);
-void pop_top(stack_t stack, unsigned int line_number);
-void nop(stack_t stack, unsigned int line_number);
-void swap_nodes(stack_t stack, unsigned int line_number);
-
- Arithmetic operations 
-void add_nodes(stack_t stack, unsigned int line_number);
-void sub_nodes(stack_t stack, unsigned int line_number);
-void div_nodes(stack_t stack, unsigned int line_number);
-void mul_nodes(stack_t stack, unsigned int line_number);
-void mod_nodes(stack_t stack, unsigned int line_number);
-
- String operations 
-void print_char(stack_t stack, unsigned int line_number);
-void print_str(stack_t stack, unsigned int line_number);
-void rotl(stack_t stack, unsigned int line_number);
-void rotr(stack_t stack, unsigned int line_number);
-
-#endif  MONTY_H 
+#endif /* MONTY_H */
