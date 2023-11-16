@@ -1,8 +1,5 @@
 #include "monty.h"
 
-int line_number;
-char *opcode;
-
 void nested_error(int error_code)
 {
     switch (error_code)
