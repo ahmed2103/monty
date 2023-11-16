@@ -1,5 +1,3 @@
-#include "monty.h"
-
 /**
  * print_character - Prints the ASCII character value.
  * @stack: Pointer to a pointer to the stack's top node.
@@ -7,16 +5,16 @@
  */
 void print_character(stack_t **stack, unsigned int line)
 {
-	int ascii;
+    int ascii;
 
-	if (stack == NULL || *stack == NULL)
-		handle_error(PCHAR_EMPTY_STACK_ERROR);
+    if (stack == NULL || *stack == NULL)
+        handle_error(PCHAR_EMPTY_STACK_ERROR, line);
 
-	ascii = (*stack)->n;
-	if (ascii < 0 || ascii > 127)
-		handle_error(PCHAR_OUT_OF_RANGE_ERROR);
+    ascii = (*stack)->n;
+    if (ascii < 0 || ascii > 127)
+        handle_error(PCHAR_OUT_OF_RANGE_ERROR, line);
 
-	printf("%c\n", ascii);
+    printf("%c\n", ascii);
 }
 
 /**
@@ -26,25 +24,25 @@ void print_character(stack_t **stack, unsigned int line)
  */
 void print_string(stack_t **stack, unsigned int line)
 {
-	int ascii;
-	stack_t *tmp;
+    int ascii;
+    stack_t *tmp;
 
-	if (stack == NULL || *stack == NULL)
-	{
-		printf("\n");
-		return;
-	}
+    if (stack == NULL || *stack == NULL)
+    {
+        printf("\n");
+        return;
+    }
 
-	tmp = *stack;
-	while (tmp != NULL)
-	{
-		ascii = tmp->n;
-		if (ascii <= 0 || ascii > 127)
-			break;
-		printf("%c", ascii);
-		tmp = tmp->next;
-	}
-	printf("\n");
+    tmp = *stack;
+    while (tmp != NULL)
+    {
+        ascii = tmp->n;
+        if (ascii <= 0 || ascii > 127)
+            break;
+        printf("%c", ascii);
+        tmp = tmp->next;
+    }
+    printf("\n");
 }
 
 /**
@@ -54,18 +52,18 @@ void print_string(stack_t **stack, unsigned int line)
  */
 void rotate_left(stack_t **stack, unsigned int line)
 {
-	stack_t *tmp;
+    stack_t *tmp;
 
-	if (stack == NULL || *stack == NULL || (*stack)->next == NULL)
-		return;
+    if (stack == NULL || *stack == NULL || (*stack)->next == NULL)
+        return;
 
-	tmp = *stack;
-	while (tmp->next != NULL)
-		tmp = tmp->next;
+    tmp = *stack;
+    while (tmp->next != NULL)
+        tmp = tmp->next;
 
-	tmp->next = *stack;
-	(*stack)->prev = tmp;
-	*stack = (*stack)->next;
-	(*stack)->prev->next = NULL;
-	(*stack)->prev = NULL;
+    tmp->next = *stack;
+    (*stack)->prev = tmp;
+    *stack = (*stack)->next;
+    (*stack)->prev->next = NULL;
+    (*stack)->prev = NULL;
 }
