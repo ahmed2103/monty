@@ -6,13 +6,13 @@
  */
 void open_file(char *file_name)
 {
-	FILE *file = fopen(file_name, "r");
+    FILE *file = fopen(file_name, "r");
 
-	if (file == NULL)
-		handle_error(FILE_OPEN_ERROR);
+    if (file == NULL)
+        handle_error(FILE_OPEN_ERROR);
 
-	read_file(file);
-	fclose(file);
+    read_file(file);
+    fclose(file);
 }
 
 /**
@@ -21,18 +21,18 @@ void open_file(char *file_name)
  */
 void read_file(FILE *fd)
 {
-	char *lineptr = NULL;
-	size_t n = 0;
-	int line_number = 1;
+    char *lineptr = NULL;
+    size_t n = 0;
+    int line_number = 1;
 
-	if (fd == NULL)
-		handle_error(FILE_READ_ERROR);
+    if (fd == NULL)
+        handle_error(FILE_READ_ERROR);
 
-	while (getline(&lineptr, &n, fd) != -1)
-	{
-		int format = interpret_line(lineptr, line_number++, 0);
-	}
-	free(lineptr);
+    while (getline(&lineptr, &n, fd) != -1)
+    {
+        int format = interpret_line(lineptr, line_number++, 0);
+    }
+    free(lineptr);
 }
 
 /**
@@ -42,12 +42,12 @@ void read_file(FILE *fd)
  */
 int len_chars(FILE *file)
 {
-	int length = 0;
+    int length = 0;
 
-	fseek(file, 0, SEEK_END);
-	length = ftell(file);
-	rewind(file);
-	return (length);
+    fseek(file, 0, SEEK_END);
+    length = ftell(file);
+    rewind(file);
+    return (length);
 }
 
 /**
@@ -60,21 +60,21 @@ int len_chars(FILE *file)
  */
 int interpret_line(char *lineptr, int line_number, int format)
 {
-	const char *delim = "\n ";
-	char *opcode = strtok(lineptr, delim);
+    const char *delim = "\n ";
+    char *opcode = strtok(lineptr, delim);
 
-	if (opcode == NULL)
-		return (format);
+    if (opcode == NULL)
+        return (format);
 
-	char *value = strtok(NULL, delim);
+    char *value = strtok(NULL, delim);
 
-	if (strcmp(opcode, "queue") == 0)
-		return (1);
-	else if (strcmp(opcode, "stack") == 0)
-		return (0);
+    if (strcmp(opcode, "queue") == 0)
+        return (1);
+    else if (strcmp(opcode, "stack") == 0)
+        return (0);
 
-	find_func(opcode, value, line_number, format);
-	return (format);
+    find_func(opcode, value, line_number, format);
+    return (format);
 }
 
 /**
@@ -85,25 +85,3 @@ int interpret_line(char *lineptr, int line_number, int format)
  * @format: Format specifier. If 0 Nodes will be entered as a stack.
  *          if 1 nodes will be entered as a queue.
  */
-void find_func(char *opcode, char *value, int line_number, int format)
-{
-	instruction_t instructions[] = {
-		{"push", add_to_stack},
-		/* Add more instructions here */
-		{NULL, NULL}
-	};
-
-	int i;
-
-	for (i = 0; instructions[i].opcode != NULL; i++)
-	{
-		if (strcmp(opcode, instructions[i].opcode) == 0)
-		{
-			instructions[i].f(&value, line_number);
-			return;
-		}
-	}
-
-	handle_error(UNKNOWN_OPCODE_ERROR);
-}
-
