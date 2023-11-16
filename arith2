@@ -1,0 +1,19 @@
+#include "monty.h"
+
+/**
+ * mod - Computes the modulus of the second top element.
+ * @stack: Pointer to a pointer pointing to the top node of the stack.
+ * @line_number: Line number of the opcode.
+ */
+void mod(stack_t **stack, unsigned int line_number) {
+    if (!stack || !*stack || !(*stack)->next)
+        handle_error(SHORT_STACK_ERROR, line_number, "mod");
+
+    if ((*stack)->n == 0)
+        handle_error(DIV_ZERO_ERROR, line_number);
+
+    *stack = (*stack)->next;
+    (*stack)->n %= (*stack)->prev->n;
+    free((*stack)->prev);
+    (*stack)->prev = NULL;
+}
