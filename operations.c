@@ -31,12 +31,12 @@ void execute_opcode(stack_t **stack, unsigned int line_number, char *code)
 		{NULL, NULL}
 	};
 
-	while (opcode_func[i].opcode)
-    {
+ 	while (opcode_func[i].opcode)
+ 	{
     	if (strcmp(opcode_func[i].opcode, code) == 0)
-        {
-            opcode_func[i].f(stack, line_number);
-            return;
+		{
+        	opcode_func[i].f(stack, line_number);
+        	return;
         }
         i++;
     }
