@@ -149,8 +149,6 @@ void rotl(stack_t **stack, unsigned int line_number)
     temp->prev = last;
     last->next = temp;
 }
-#include "monty.h"
-
 /**
  * rotr - Rotates the stack to the bottom.
  * @stack: Double pointer to header (top) of the stack.
