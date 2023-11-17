@@ -10,14 +10,26 @@
 void execute_opcode(stack_t **stack, unsigned int line_number, char *code)
 {
     int i = 0;
-    instruction_t opcodes[] = {
-        {"add", add},
-        {"div", divide},
-        {"mod", modulo},
-        {"mul", multiply},
-        /* Add other opcodes here */
-        {NULL, NULL}
-    };
+    instruction_t opcode_func[] = {
+		{"add", add_top_two_elements},
+		{"div", divide_second_by_top},
+		{"mod", get_module},
+		{"mul", multiply_top_with_second},
+		{"nop", _nop},
+		{"pall", pall},
+		{"pint", pint},
+		{"pop", pop},
+		{"push", push},
+		{"sub", subtract_top_from_second},
+		{"swap", swap},
+		{"pchar", pchar},
+		{"pstr", _pstr},
+		{"rotr", rotr},
+		{"rotl", rotl},
+		{"stack", stack},
+		{"queue", queue},
+		{NULL, NULL}
+	};
 
     while (opcodes[i].opcode)
     {
