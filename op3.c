@@ -88,7 +88,7 @@ void add_node_queue(stack_t **stack, int argument)
 	if (new_node == NULL)
 	{
 		dprintf(STDERR_FILENO, "Error: malloc failed\n");
-		free_stack_(*stack);
+		free_stack(*stack);
 
 		exit(EXIT_FAILURE);
 	}
