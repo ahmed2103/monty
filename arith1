@@ -1,52 +1,199 @@
 #include "monty.h"
 
-void add_nodes(stack_t **stack, unsigned int line_number)
+/**
+ * add - Adds the top two elements of the stack.
+ * @stack: Double pointer to the top of the stack.
+ * @n_line: Line number in the input file where the operation is performed.
+ */
+void add(stack_t **stack, unsigned int n_line)
 {
-    if (stack == NULL || *stack == NULL || (*stack)->next == NULL)
+    stack_t *temp;
+
+    if (!stack || !*stack || !((*stack)->next))
     {
-        handle_error(SHORT_STACK_ERROR);
-        return;
+        fprintf(stderr, "L%d: can't add, stack too short\n", n_line);
+        free_stack_t(*stack);
+
+        exit(EXIT_FAILURE);
     }
 
-    (*stack) = (*stack)->next;
-    int result = (*stack)->n + (*stack)->prev->n;
-    (*stack)->n = result;
-    free((*stack)->prev);
+    temp = *stack;
+    *stack = (*stack)->next;
+    (*stack)->n += temp->n;
     (*stack)->prev = NULL;
+    free(temp);
 }
 
-void sub_nodes(stack_t **stack, unsigned int line_number)
+/**
+ * divide - Divides the second top element of the stack by the top element.
+ * @stack: Double pointer to the top of the stack.
+ * @n_line: Line number in the input file where the operation is performed.
+ */
+void divide(stack_t **stack, unsigned int n_line)
 {
-    if (stack == NULL || *stack == NULL || (*stack)->next == NULL)
+    stack_t *current = *stack;
+    int nnodes = 1; /* Number of elements in stack */
+
+    if (*stack == NULL)
     {
-        handle_error(SHORT_STACK_ERROR);
-        return;
+        fprintf(stderr, "L%u: can't div, stack too short\n", n_line);
+        free_stack_t(*stack);
+
+        exit(EXIT_FAILURE);
     }
 
-    (*stack) = (*stack)->next;
-    int result = (*stack)->n - (*stack)->prev->n;
-    (*stack)->n = result;
-    free((*stack)->prev);
-    (*stack)->prev = NULL;
+    while (current->next != NULL)
+    {
+        current = current->next;
+        nnodes++;
+    }
+
+    if (nnodes + 1 <= 2)
+    {
+        fprintf(stderr, "L%d: can't div, stack too short\n", n_line);
+        free_stack_t(*stack);
+
+        exit(EXIT_FAILURE);
+    }
+
+    current = *stack; /* Current equals to head to make division */
+
+    if (current->n == 0)
+    {
+        fprintf(stderr, "L%d: division by zero\n", n_line);
+        exit(EXIT_FAILURE);
+    }
+
+    current->next->n = current->next->n / current->n; /* Do the division */
+
+    *stack = current->next;
+    free(current);
+    current->prev = NULL;
 }
 
-void div_nodes(stack_t **stack, unsigned int line_number)
+/**
+ * mod - Gets the module of the second top element of the stack and top element.
+ * @stack: Double pointer to the top of the stack.
+ * @n_line: Line number in the input file where the operation is performed.
+ */
+void mod(stack_t **stack, unsigned int n_line)
 {
-    if (stack == NULL || *stack == NULL || (*stack)->next == NULL)
+    stack_t *current = *stack;
+    int nnodes = 1; /* Number of elements in stack */
+
+    if (*stack == NULL)
     {
-        handle_error(SHORT_STACK_ERROR);
-        return;
+        fprintf(stderr, "L%u: can't mod, stack too short\n", n_line);
+        free_stack_t(*stack);
+
+        exit(EXIT_FAILURE);
     }
 
-    if ((*stack)->n == 0)
+    while (current->next != NULL)
     {
-        handle_error(DIV_ZERO_ERROR);
-        return;
+        current = current->next;
+        nnodes++;
     }
 
-    (*stack) = (*stack)->next;
-    int result = (*stack)->n / (*stack)->prev->n;
-    (*stack)->n = result;
-    free((*stack)->prev);
-    (*stack)->prev = NULL;
+    if (nnodes + 1 <= 2)
+    {
+        fprintf(stderr, "L%d: can't mod, stack too short\n", n_line);
+        free_stack_t(*stack);
+
+        exit(EXIT_FAILURE);
+    }
+
+    current = *stack; /* Current equals to head to make module */
+
+    if (current->n == 0)
+    {
+        fprintf(stderr, "L%d: division by zero\n", n_line);
+        exit(EXIT_FAILURE);
+    }
+
+    current->next->n = current->next->n % current->n; /* Do the mod */
+
+    *stack = current->next;
+    free(current);
+    current->prev = NULL;
+}
+
+/**
+ * multiply - Multiplies top element of the stack with the second top element.
+ * @stack: Double pointer to the top of the stack.
+ * @n_line: Line number in the input file where the operation is performed.
+ */
+void multiply(stack_t **stack, unsigned int n_line)
+{
+    stack_t *current = *stack;
+    int nnodes = 1; /* Number of elements in stack */
+
+    if (*stack == NULL)
+    {
+        fprintf(stderr, "L%u: can't mul, stack too short\n", n_line);
+        free_stack_t(*stack);
+
+        exit(EXIT_FAILURE);
+    }
+
+    while (current->next != NULL)
+    {
+        current = current->next;
+        nnodes++;
+    }
+
+    if (nnodes + 1 <= 2)
+    {
+        fprintf(stderr, "L%u: can't mul, stack too short\n", n_line);
+        free_stack_t(*stack);
+
+        exit(EXIT_FAILURE);
+    }
+
+    current = *stack; /* Current equals to head to make mul */
+
+    current->next->n = current->next->n * current->n; /* Do the mul */
+
+    *stack = current->next;
+    free(current);
+    current->prev = NULL;
+}
+
+/**
+ * subtract - Subtracts top element of the stack from the second top element.
+ * @stack: Double pointer to the top of the stack.
+ * @n_line: Line number in the input file where the operation is performed.
+ */
+void subtract(stack_t **stack, unsigned int n_line)
+{
+    stack_t *current = *stack;
+    int nnodes = 1; /* Number of elements in stack */
+
+    if (*stack == NULL)
+    {
+        fprintf(stderr, "L%u: can't sub, stack too short\n", n_line);
+        free_stack_t(*stack);
+
+        exit(EXIT_FAILURE);
+    }
+
+    while (current->next != NULL)
+    {
+        current = current->next;
+        nnodes++;
+    }
+
+    if (nnodes + 1 <= 2)
+    {
+        fprintf(stderr, "L%u: can't sub, stack too short\n", n_line);
+        exit(EXIT_FAILURE);
+    }
+
+    current = *stack; /* Current equals to head to make subtraction */
+
+    current->next->n = current->next->n - current->n; /* Do the subtraction */
+
+    *stack = current->next;
+    free(current);
+    current->prev = NULL;
 }
