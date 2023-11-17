@@ -23,7 +23,7 @@ void execute_opcode(stack_t **stack, unsigned int line_number, char *code)
 		{"sub", subtract_top_from_second},
 		{"swap", swap},
 		{"pchar", pchar},
-		{"pstr", _pstr},
+		{"pstr", pstr},
 		{"rotr", rotr},
 		{"rotl", rotl},
 		{"stack", stack},
@@ -31,7 +31,7 @@ void execute_opcode(stack_t **stack, unsigned int line_number, char *code)
 		{NULL, NULL}
 	};
 
-    while (opcodes[i].opcode)
+    while (code[i].opcode)
     {
         if (strcmp(opcodes[i].opcode, code) == 0)
         {
