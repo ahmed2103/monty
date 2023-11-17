@@ -1,19 +1,47 @@
 #include "monty.h"
 
 /**
- * mod - Computes the modulus of the second top element.
+ * mul_nodes - Multiplies the top two elements of the stack.
  * @stack: Pointer to a pointer pointing to the top node of the stack.
- * @line_number: Line number of the opcode.
+ * @line_number: Integer representing the line number of the opcode.
  */
-void mod(stack_t **stack, unsigned int line_number) {
-    if (!stack || !*stack || !(*stack)->next)
-        handle_error(SHORT_STACK_ERROR, line_number, "mod");
+void mul_nodes(stack_t **stack, unsigned int line_number)
+{
+    if (stack == NULL || *stack == NULL || (*stack)->next == NULL)
+    {
+        handle_error(SHORT_STACK_ERROR);
+        return;
+    }
+
+    (*stack) = (*stack)->next;
+    int result = (*stack)->n * (*stack)->prev->n;
+    (*stack)->n = result;
+    free((*stack)->prev);
+    (*stack)->prev = NULL;
+}
+
+/**
+ * mod_nodes - Computes the modulo of the top two elements of the stack.
+ * @stack: Pointer to a pointer pointing to the top node of the stack.
+ * @line_number: Integer representing the line number of the opcode.
+ */
+void mod_nodes(stack_t **stack, unsigned int line_number)
+{
+    if (stack == NULL || *stack == NULL || (*stack)->next == NULL)
+    {
+        handle_error(SHORT_STACK_ERROR);
+        return;
+    }
 
     if ((*stack)->n == 0)
-        handle_error(DIV_ZERO_ERROR, line_number);
+    {
+        handle_error(DIV_ZERO_ERROR);
+        return;
+    }
 
-    *stack = (*stack)->next;
-    (*stack)->n %= (*stack)->prev->n;
+    (*stack) = (*stack)->next;
+    int result = (*stack)->n % (*stack)->prev->n;
+    (*stack)->n = result;
     free((*stack)->prev);
     (*stack)->prev = NULL;
 }
