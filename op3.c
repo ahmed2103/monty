@@ -18,7 +18,7 @@ void push(stack_t **stack, unsigned int line_number)
     if (argument == NULL)
     {
         dprintf(STDERR_FILENO, "L%u: usage: push integer\n", line_number);
-        free_stack_t(*stack);
+        free_stack(*stack);
         exit(EXIT_FAILURE);
     }
 
@@ -27,7 +27,7 @@ void push(stack_t **stack, unsigned int line_number)
         if (!isdigit(argument[i]) && argument[0] != '-')
         {
             dprintf(STDERR_FILENO, "L%u: usage: push integer\n", line_number);
-            free_stack_t(*stack);
+            free_stack(*stack);
             exit(EXIT_FAILURE);
         }
 
