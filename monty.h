@@ -58,7 +58,7 @@ void queue(stack_t **stack, unsigned int line_number);
 
 void execute_opcode(stack_t **stack, unsigned int line_number, char *code);
 char **token_opcode(char *line);
-void free_stack_t(stack_t *head);
+void free_stack(stack_t *head);
 void add_node(stack_t **stack, int argument);
 void add_node_queue(stack_t **stack, int argument);
 
