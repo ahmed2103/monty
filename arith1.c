@@ -48,7 +48,7 @@ void subtract_top_from_second(stack_t **head, unsigned int line_number)
     if (*head == NULL)
     {
         fprintf(stderr, "L%u: can't sub, stack too short\n", line_number);
-        free_stack_t(*head);
+        free_stack(*head);
         exit(EXIT_FAILURE);
     }
 
@@ -88,7 +88,7 @@ void multiply_top_with_second(stack_t **head, unsigned int line_number)
     if (*head == NULL)
     {
         fprintf(stderr, "L%u: can't mul, stack too short\n", line_number);
-        free_stack_t(*head);
+        free_stack(*head);
         exit(EXIT_FAILURE);
     }
 
@@ -101,7 +101,7 @@ void multiply_top_with_second(stack_t **head, unsigned int line_number)
     if (num_nodes + 1 <= 2)
     {
         fprintf(stderr, "L%u: can't mul, stack too short\n", line_number);
-        free_stack_t(*head);
+        free_stack(*head);
         exit(EXIT_FAILURE);
     }
 
@@ -132,7 +132,7 @@ void divide_second_by_top(stack_t **head, unsigned int line_number)
     if (*head == NULL)
     {
         fprintf(stderr, "L%u: can't div, stack too short\n", line_number);
-        free_stack_t(*head);
+        free_stack(*head);
         exit(EXIT_FAILURE);
     }
 
@@ -145,7 +145,7 @@ void divide_second_by_top(stack_t **head, unsigned int line_number)
     if (num_nodes + 1 <= 2)
     {
         fprintf(stderr, "L%d: can't div, stack too short\n", line_number);
-        free_stack_t(*head);
+        free_stack(*head);
         exit(EXIT_FAILURE);
     }
 
