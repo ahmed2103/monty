@@ -29,7 +29,7 @@ void get_module(stack_t **head, unsigned int line_number)
     if (num_nodes + 1 <= 2)
     {
         fprintf(stderr, "L%u: can't mod, stack too short\n", line_number);
-        free_stack_t(*head);
+        free_stack(*head);
         exit(EXIT_FAILURE);
     }
 
