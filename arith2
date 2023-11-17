@@ -1,47 +1,51 @@
-#include "monty.h"
-
 /**
- * mul_nodes - Multiplies the top two elements of the stack.
- * @stack: Pointer to a pointer pointing to the top node of the stack.
- * @line_number: Integer representing the line number of the opcode.
+ * divide_second_by_top - Divides the second top element of the stack by the top element.
+ * @head: Double pointer to the header (top) of the stack.
+ * @line_number: Counter for the line number of the file.
+ *
+ * This function divides the value of the second top element of the stack by
+ * the value of the top element. If the stack is empty or has fewer than two
+ * elements, it prints an error message and exits. If the division by zero is
+ * attempted, it also exits with an error message.
+ *
+ * Return: void.
  */
-void mul_nodes(stack_t **stack, unsigned int line_number)
+void divide_second_by_top(stack_t **head, unsigned int line_number)
 {
-    if (stack == NULL || *stack == NULL || (*stack)->next == NULL)
+    stack_t *current = *head;
+    int num_nodes = 1; /* Number of elements in stack */
+
+    if (*head == NULL)
     {
-        handle_error(SHORT_STACK_ERROR);
-        return;
+        fprintf(stderr, "L%u: can't div, stack too short\n", line_number);
+        free_stack_t(*head);
+        exit(EXIT_FAILURE);
     }
 
-    (*stack) = (*stack)->next;
-    int result = (*stack)->n * (*stack)->prev->n;
-    (*stack)->n = result;
-    free((*stack)->prev);
-    (*stack)->prev = NULL;
-}
-
-/**
- * mod_nodes - Computes the modulo of the top two elements of the stack.
- * @stack: Pointer to a pointer pointing to the top node of the stack.
- * @line_number: Integer representing the line number of the opcode.
- */
-void mod_nodes(stack_t **stack, unsigned int line_number)
-{
-    if (stack == NULL || *stack == NULL || (*stack)->next == NULL)
+    while (current->next != NULL)
     {
-        handle_error(SHORT_STACK_ERROR);
-        return;
+        current = current->next;
+        num_nodes++;
     }
 
-    if ((*stack)->n == 0)
+    if (num_nodes + 1 <= 2)
     {
-        handle_error(DIV_ZERO_ERROR);
-        return;
+        fprintf(stderr, "L%d: can't div, stack too short\n", line_number);
+        free_stack_t(*head);
+        exit(EXIT_FAILURE);
     }
 
-    (*stack) = (*stack)->next;
-    int result = (*stack)->n % (*stack)->prev->n;
-    (*stack)->n = result;
-    free((*stack)->prev);
-    (*stack)->prev = NULL;
+    current = *head; /* Set current to head to perform division */
+
+    if (current->n == 0)
+    {
+        fprintf(stderr, "L%d: division by zero\n", line_number);
+        exit(EXIT_FAILURE);
+    }
+
+    current->next->n /= current->n; /* Perform the division */
+
+    *head = current->next;
+    free(current);
+    current->prev = NULL;
 }
