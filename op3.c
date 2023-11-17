@@ -108,7 +108,7 @@ void add_node_queue(stack_t **stack, int argument)
 		new_node->prev = last;
 		last->next = new_node;
 	}
-
+}
 /**
  * queue - Selects queue mode (default stack).
  * @stack: Double pointer to header (top) of the stack.
