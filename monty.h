@@ -36,16 +36,16 @@ typedef struct instruction_s
 } instruction_t;
 extern char stack_queue;
 
-void add(stack_t **stack, unsigned int line_number);
-void div(stack_t **stack, unsigned int line_number);
-void mod(stack_t **stack, unsigned int line_number);
-void mul(stack_t **stack, unsigned int line_number);
+void add_top_two_elements(stack_t **stack, unsigned int line_number);
+void subtract_top_from_second(stack_t **head, unsigned int line_number);
+void multiply_top_with_second(stack_t **head, unsigned int line_number);
+void get_module(stack_t **head, unsigned int line_number);
 void _nop(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);
 void pint(stack_t **stack, unsigned int line_number);
 void pop(stack_t **stack, unsigned int line_number);
 void push(stack_t **stack, unsigned int line_number);
-void sub(stack_t **stack, unsigned int line_number);
+void divide_second_by_top(stack_t **head, unsigned int line_number);
 void swap(stack_t **stack, unsigned int line_number);
 
 void pchar(stack_t **stack, unsigned int line_number);
@@ -56,7 +56,7 @@ void rotl(stack_t **stack, unsigned int line_number);
 void stack(stack_t **stack, unsigned int line_number);
 void queue(stack_t **stack, unsigned int line_number);
 
-void get_opcode(stack_t **stack, unsigned int line_number, char *code);
+void execute_opcode(stack_t **stack, unsigned int line_number, char *code);
 char **token_opcode(char *line);
 void free_stack_t(stack_t *head);
 void add_node(stack_t **stack, int argument);
