@@ -1,96 +1,101 @@
 #include "monty.h"
 
 /**
- * create_node - Creates a new stack node.
- * @n: Integer value to be stored in the node.
- * Return: Pointer to the newly created node.
+ * pchar - Prints the character at the top of the stack as ASCII, followed by a new line.
+ * @stack: Double pointer to the header (top) of the stack.
+ * @line_number: Counter for line number of the file.
+ *
+ * Return: void.
  */
-stack_t *create_node(int n)
+void pchar(stack_t **stack, unsigned int line_number)
 {
-	stack_t *node = malloc(sizeof(stack_t));
+    int n;
 
-	if (!node)
-		handle_error(MEM_ALLOC_FAIL);
+    if (*stack == NULL)
+    {
+        fprintf(stderr, "L%d: can't pchar, stack empty\n", line_number);
+        free_stack_t(*stack);
+        exit(EXIT_FAILURE);
+    }
 
-	node->n = n;
-	node->prev = NULL;
-	node->next = NULL;
-	return (node);
+    n = (*stack)->n;
+    if (n >= 32 && n <= 127)
+        printf("%c\n", n);
+    else
+    {
+        fprintf(stderr, "L%d: can't pchar, value out of range\n", line_number);
+        free_stack_t(*stack);
+        exit(EXIT_FAILURE);
+    }
 }
-
 /**
- * free_nodes - Frees all nodes in the stack.
+ * pint - prints the value at the top of the stack
+ * @stack: double pointer to header (top) of the stack.
+ * @line_number: counter for line number of the file.
+ *
+ * Return: void.
  */
-void free_nodes(void)
+void pint(stack_t **stack, unsigned int line_number)
 {
-	while (head)
-	{
-		stack_t *tmp = head;
-		head = head->next;
-		free(tmp);
-	}
+    if (*stack == NULL)
+    {
+        dprintf(STDERR_FILENO, "L%d: can't pint, stack empty\n", line_number);
+        free_stack_t(*stack);
+        exit(EXIT_FAILURE);
+    }
+
+    printf("%d\n", (*stack)->n);
 }
-
 /**
- * print_stack - Prints all elements in the stack.
- * @stack: Pointer to the top of the stack.
- * @line: Line number (unused in this context).
+ * pop - Removes the top element of the stack.
+ * @stack: Double pointer to header (top) of the stack.
+ * @line_number: Counter for line number of the file.
+ *
+ * Return: void.
  */
-void print_stack(stack_t **stack, unsigned int line)
+void pop(stack_t **stack, unsigned int line_number)
 {
-	(void)line;
-	stack_t *tmp = *stack;
+    stack_t *current;
 
-	while (tmp)
-	{
-		printf("%d\n", tmp->n);
-		tmp = tmp->next;
-	}
+    if (*stack == NULL)
+    {
+        fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
+        free_stack_t(*stack);
+        exit(EXIT_FAILURE);
+    }
+
+    current = *stack;
+    if ((*stack)->next)
+        (*stack)->next->prev = NULL;
+    *stack = (*stack)->next;
+    free(current);
 }
-
 /**
- * push_stack - Pushes a new node onto the stack.
- * @new_node: Pointer to the new node.
- * @line: Line number (unused in this context).
+ * pstr - Prints the string starting at the top of the stack.
+ * @stack: Double pointer to header (top) of the stack.
+ * @line_number: Counter for line number of the file.
+ *
+ * Return: void.
  */
-void push_stack(stack_t **new_node, unsigned int line)
+void pstr(stack_t **stack, unsigned int line_number)
 {
-	if (!new_node || !*new_node)
-		handle_error(MEM_ALLOC_FAIL);
+    int n;
+    stack_t *temp = *stack;
 
-	stack_t *tmp = head;
-	head = *new_node;
-	head->next = tmp;
+    (void) line_number;
+    if (*stack == NULL)
+    {
+        printf("\n");
+        return;
+    }
 
-	if (tmp)
-		tmp->prev = head;
-
-	*new_node = NULL;
-}
-
-/**
- * push_queue - Pushes a new node into the queue.
- * @new_node: Pointer to the new node.
- * @line: Line number (unused in this context).
- */
-void push_queue(stack_t **new_node, unsigned int line)
-{
-	if (!new_node || !*new_node)
-		handle_error(MEM_ALLOC_FAIL);
-
-	stack_t *tmp = head;
-
-	if (!tmp)
-	{
-		head = *new_node;
-		*new_node = NULL;
-		return;
-	}
-
-	while (tmp->next)
-		tmp = tmp->next;
-
-	tmp->next = *new_node;
-	(*new_node)->prev = tmp;
-	*new_node = NULL;
+    while (temp != NULL)
+    {
+        n = temp->n;
+        if (!(n >= 1 && n <= 127) || n == 0)
+            break;
+        printf("%c", n);
+        temp = temp->next;
+    }
+    printf("\n");
 }
