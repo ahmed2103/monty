@@ -1,3 +1,5 @@
+#include "monty.h"
+
 /**
  * push - Pushes an element to the stack.
  * @stack: Double pointer to header (top) of the stack.
