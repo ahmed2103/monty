@@ -76,12 +76,3 @@ int interpret_line(char *lineptr, int line_number, int format)
     find_func(opcode, value, line_number, format);
     return (format);
 }
-
-/**
- * find_func - Finds the appropriate function to run the opcode instructions.
- * @opcode: The operation code, e.g., push, pall, ...
- * @value: The possible value for the operation.
- * @line_number: Line number for the opcode.
- * @format: Format specifier. If 0 Nodes will be entered as a stack.
- *          if 1 nodes will be entered as a queue.
- */
