@@ -26,7 +26,7 @@ void execute_opcode(stack_t **stack, unsigned int line_number, char *code)
 		{"pstr", pstr},
 		{"rotr", rotr},
 		{"rotl", rotl},
-		{"stack", stack},
+		{"stack", _stack},
 		{"queue", queue},
 		{NULL, NULL}
 	};
