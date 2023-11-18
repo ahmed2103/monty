@@ -17,7 +17,7 @@ void push(stack_t **stack, unsigned int line_number)
 
     if (argument == NULL)
     {
-        dprintf(STDERR_FILENO, "L%u: usage: push integer\n", line_number);
+        fprintf(stderr, "L%u: usage: push integer\n", line_number);
         free_stack(*stack);
         exit(EXIT_FAILURE);
     }
@@ -26,7 +26,7 @@ void push(stack_t **stack, unsigned int line_number)
     for (i = 0; i < len; i++)
         if (!isdigit(argument[i]) && argument[0] != '-')
         {
-            dprintf(STDERR_FILENO, "L%u: usage: push integer\n", line_number);
+            fprintf(stderr, "L%u: usage: push integer\n", line_number);
             free_stack(*stack);
             exit(EXIT_FAILURE);
         }
@@ -52,7 +52,7 @@ void add_node(stack_t **stack, int argument)
 	new_node = malloc(sizeof(stack_t));
 	if (new_node == NULL)
 	{
-		dprintf(STDERR_FILENO, "Error: malloc failed\n");
+		fprintf(stderr, "Error: malloc failed\n");
 		free_stack(*stack);
 
 		exit(EXIT_FAILURE);
@@ -87,7 +87,7 @@ void add_node_queue(stack_t **stack, int argument)
 	new_node = malloc(sizeof(stack_t));
 	if (new_node == NULL)
 	{
-		dprintf(STDERR_FILENO, "Error: malloc failed\n");
+		fprintf(stderr, "Error: malloc failed\n");
 		free_stack(*stack);
 
 		exit(EXIT_FAILURE);
