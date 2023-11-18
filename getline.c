@@ -1,3 +1,4 @@
+#include "monty.h"
 /**
  * _getline - Read a line from a file stream
  * @lineptr: Pointer to the buffer containing the line read
@@ -48,33 +49,7 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream) {
     (*lineptr)[index] = '\0';
 
     if (ch == EOF) {
-        // Additional handling if needed for EOF
     }
 
     return index;
-}
-
-/**
- * main - Example usage of _getline function
- *
- * Return: EXIT_SUCCESS on success, EXIT_FAILURE on failure
- */
-int main() {
-    char *line = NULL;
-    size_t len = 0;
-    FILE *file = fopen("your_file.txt", "r");
-    if (file == NULL) {
-        fprintf(stderr, "Error opening the file\n");
-        return EXIT_FAILURE;
-    }
-
-    ssize_t read;
-    while ((read = _getline(&line, &len, file)) != -1) {
-        // Process the line
-        printf("%s\n", line);
-    }
-
-    free(line);
-    fclose(file);
-    return EXIT_SUCCESS;
 }
