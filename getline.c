@@ -8,6 +8,11 @@
  * Return: Number of characters read, -1 on failure
  */
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream) {
+    int index = 0;
+    int ch;
+    int i;
+    char *temp;
+    
     if (lineptr == NULL || n == NULL || stream == NULL) {
         return -1;
     }
@@ -19,21 +24,17 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream) {
             return -1;
         }
     }
-
-    int index = 0;
-    int ch;
-
     while ((ch = fgetc(stream)) != EOF && ch != '\n') {
         (*lineptr)[index++] = ch;
 
-        if (index >= *n - 1) {
+        if ((size_t)index >= *n - 1) {
             *n *= 2;
-            char *temp = (char *)malloc(*n);
+            temp = (char *)malloc(*n);
             if (temp == NULL) {
                 return -1;
             }
 
-            for (int i = 0; i < index; i++) {
+            for (i = 0; i < index; i++) {
                 temp[i] = (*lineptr)[i];
             }
 
