@@ -6,6 +6,8 @@
 #include <string.h>
 #include <ctype.h>
 #include <unistd.h>
+#define INITIAL_BUFFER_SIZE 128
+
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -40,6 +42,7 @@ void add_top_two_elements(stack_t **stack, unsigned int line_number);
 void subtract_top_from_second(stack_t **head, unsigned int line_number);
 void multiply_top_with_second(stack_t **head, unsigned int line_number);
 void get_module(stack_t **head, unsigned int line_number);
+ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 void _nop(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);
 void pint(stack_t **stack, unsigned int line_number);
