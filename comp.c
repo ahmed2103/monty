@@ -24,7 +24,6 @@ void pop(stack_t **stack, unsigned int line_number)
     *stack = (*stack)->next;
     free(current);
 }
-#include "monty.h"
 
 /**
  * pstr - Prints the string starting at the top of the stack.
