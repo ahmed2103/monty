@@ -110,20 +110,6 @@ void add_node_queue(stack_t **stack, int argument)
 	}
 }
 /**
- * queue - Selects queue mode (default stack).
- * @stack: Double pointer to header (top) of the stack.
- * @line_number: Counter for line number of the file.
- *
- * Return: void.
- */
-void queue(stack_t **stack, unsigned int line_number)
-{
-    (void) stack;
-    (void) line_number;
-    stack_queue = 'q';
-}
-
-/**
  * rotl - Rotates the stack to the top.
  * @stack: Double pointer to header (top) of the stack.
  * @line_number: Counter for line number of the file.
