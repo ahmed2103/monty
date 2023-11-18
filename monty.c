@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
         exit(EXIT_FAILURE);
     }
 
-    while (getline(&line, &len, stream) != -1)
+    while (_getline(&line, &len, stream) != -1)
     {
         code = strtok(line, " \t\r\n\v\f");
         if (code != NULL && code[0] != '#')
