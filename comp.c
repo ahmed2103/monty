@@ -70,7 +70,7 @@ void pchar(stack_t **stack, unsigned int line_number)
     if (*stack == NULL)
     {
         fprintf(stderr, "L%d: can't pchar, stack empty\n", line_number);
-        free_stack_t(*stack);
+        free_stack(*stack);
         exit(EXIT_FAILURE);
     }
 
@@ -80,7 +80,7 @@ void pchar(stack_t **stack, unsigned int line_number)
     else
     {
         fprintf(stderr, "L%d: can't pchar, value out of range\n", line_number);
-        free_stack_t(*stack);
+        free_stack(*stack);
         exit(EXIT_FAILURE);
     }
 }
