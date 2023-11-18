@@ -27,11 +27,10 @@ void pint(stack_t **stack, unsigned int line_number)
  */
 void stack(stack_t **stack, unsigned int line_number)
 {
-    (void) stack;
-    (void) line_number;
+    (void)stack;
+    (void)line_number;
     stack_queue = 's';
 }
-
 /**
  * swap - Swaps the top two elements of the stack.
  * @stack: Double pointer to header (top) of the stack.
